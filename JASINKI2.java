@@ -63,16 +63,36 @@ public class GestionReservas {
 
     public void generarAccion(int opcion, String[][] propiedades, Scanner s, int cantidad) {
         switch (opcion) {
-            case 1 -> ingresarPropiedad(propiedades, s, cantidad);
-            case 2 -> consultarPropiedad(propiedades, s, cantidad);
-            case 3 -> modificarPropiedad(propiedades, s, cantidad);
-            case 4 -> cambiarDisponibilidad(propiedades, s, cantidad);
-            case 5 -> eliminarPropiedad(propiedades, s, cantidad);
-            case 6 -> listarPropiedades(propiedades, cantidad);
-            case 7 -> crearReserva(propiedades, s, cantidad);
-            case 8 -> buscarPropiedadesPorUbicacion(propiedades, s, cantidad);
-            case 9 -> buscarPropiedadesPorTipo(propiedades, s, cantidad);
-            case 10 -> calcularEstadisticas(propiedades, cantidad);
+            case 1:
+            	ingresarPropiedad(propiedades, s, cantidad);
+            	break;
+            case 2:
+            	consultarPropiedad(propiedades, s, cantidad);
+            	break;
+            case 3:
+            	modificarPropiedad(propiedades, s, cantidad);
+            	break;
+            case 4:
+            	cambiarDisponibilidad(propiedades, s, cantidad);
+            	break;
+            case 5:
+            	eliminarPropiedad(propiedades, s, cantidad);
+            	break;
+            case 6:
+            	listarPropiedades(propiedades, cantidad);
+            	break;
+            case 7:
+            	crearReserva(propiedades, s, cantidad);
+            	break;
+            case 8:
+            	buscarPropiedadesPorUbicacion(propiedades, s, cantidad);
+            	break;
+            case 9: 
+            	buscarPropiedadesPorTipo(propiedades, s, cantidad);
+            	break;
+            case 10:
+            	calcularEstadisticas(propiedades, cantidad);
+            	break;
         }
     }
 
@@ -101,7 +121,9 @@ public class GestionReservas {
 
     public boolean validarID(String[][] propiedades, int id, int cantidad) {
         for (int i = 0; i < cantidad; i++) {
-            if (Integer.parseInt(propiedades[i][0]) == id) return true;
+            if (Integer.parseInt(propiedades[i][0]) == id) {
+            	return true;
+            }
         }
         return false;
     }
@@ -113,13 +135,17 @@ public class GestionReservas {
             System.out.println("Ingrese ID:");
             int id = ingresarEntero(s, 500, 2000);
             for (int i = 0; i < cantidad; i++) {
-                if (Integer.parseInt(propiedades[i][0]) == id) return i;
+                if (Integer.parseInt(propiedades[i][0]) == id) {
+                	return i;
+                }
             }
         } else {
             System.out.println("Ingrese nombre:");
             String nombre = s.nextLine();
             for (int i = 0; i < cantidad; i++) {
-                if (propiedades[i][1].equalsIgnoreCase(nombre)) return i;
+                if (propiedades[i][1].equalsIgnoreCase(nombre)) {
+                	return i;
+                }
             }
         }
         return -1;
@@ -127,8 +153,10 @@ public class GestionReservas {
 
     public void consultarPropiedad(String[][] propiedades, Scanner s, int cantidad) {
         int pos = buscarPropiedad(propiedades, s, cantidad);
-        if (pos != -1) mostrarPropiedad(propiedades[pos]);
-        else System.out.println("Propiedad no encontrada.");
+        if (pos != -1) { 
+        	mostrarPropiedad(propiedades[pos]);
+        }else 
+        	System.out.println("Propiedad no encontrada.");
     }
 
     public void mostrarPropiedad(String[] prop) {
@@ -143,7 +171,7 @@ public class GestionReservas {
         System.out.println("Capacidad: " + prop[5]);
         System.out.println("Precio: $" + prop[6]);
         System.out.println("Disponibilidad: " + disp);
-        System.out.println("");
+        System.out.println();
     }
 
     public void modificarPropiedad(String[][] propiedades, Scanner s, int cantidad) {
@@ -161,7 +189,8 @@ public class GestionReservas {
         if (pos != -1) {
             propiedades[pos][7] = propiedades[pos][7].equals("1") ? "2" : "1";
             System.out.println("Se actualizo correctamente.");
-        } else System.out.println("Propiedad no encontrada.");
+        } else 
+        	System.out.println("Propiedad no encontrada.");
     }
 
     public void eliminarPropiedad(String[][] propiedades, Scanner s, int cantidad) {
@@ -170,7 +199,8 @@ public class GestionReservas {
             for (int i = pos; i < cantidad - 1; i++) propiedades[i] = propiedades[i + 1];
             propiedades[cantidad - 1] = new String[8];
             System.out.println("Se elimino la propiedad.");
-        } else System.out.println("Propiedad no encontrada.");
+        } else 
+        	System.out.println("Propiedad no encontrada.");
     }
 
     public void listarPropiedades(String[][] propiedades, int cantidad) {
@@ -183,17 +213,24 @@ public class GestionReservas {
             System.out.println("Noches:");
             int noches = ingresarEntero(s, 1, 365);
             System.out.println("Huespedes:");
-            int huespedes = ingresarEntero(s, 1, Integer.parseInt(propiedades[pos][5]));
+            int huespedes = ingresarEntero(s, 1, 1000);
+            	if (huespedes > Integer.parseInt(propiedades[pos][5])) {
+            		System.out.println("ERROR: La cantidad de huespedes es mayor a la capacidad maxima.");
+            		return;
+            	}
             int total = calcularPrecioTotal(noches, Integer.parseInt(propiedades[pos][6]));
             System.out.println("Total: $" + total);
-        } else System.out.println("No disponible.");
+        } else 
+        	System.out.println("No disponible.");
     }
 
     public void buscarPropiedadesPorUbicacion(String[][] propiedades, Scanner s, int cantidad) {
         System.out.println("Ubicacion:");
         String ubic = s.nextLine();
         for (int i = 0; i < cantidad; i++) {
-            if (propiedades[i][3].equalsIgnoreCase(ubic)) mostrarPropiedad(propiedades[i]);
+            if (propiedades[i][3].equalsIgnoreCase(ubic)) {
+            	mostrarPropiedad(propiedades[i]);
+            }
         }
     }
 
@@ -201,7 +238,9 @@ public class GestionReservas {
         System.out.println("Tipo (1-5):");
         int tipo = ingresarEntero(s, 1, 5);
         for (int i = 0; i < cantidad; i++) {
-            if (Integer.parseInt(propiedades[i][4]) == tipo) mostrarPropiedad(propiedades[i]);
+            if (Integer.parseInt(propiedades[i][4]) == tipo) {
+            	mostrarPropiedad(propiedades[i]);
+            }
         }
     }
 
@@ -270,7 +309,9 @@ public class GestionReservas {
         System.out.println("Ingrese capacidad minima:");
         int cap = ingresarEntero(s, 1, 20);
         for (int i = 0; i < cantidad; i++) {
-            if (Integer.parseInt(propiedades[i][5]) >= cap) mostrarPropiedad(propiedades[i]);
+            if (Integer.parseInt(propiedades[i][5]) >= cap) {
+            	mostrarPropiedad(propiedades[i]);
+            }
+            }
         }
     }
-}
